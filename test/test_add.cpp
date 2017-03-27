@@ -17,7 +17,7 @@ TEST(Addition, road) {
       j++;
     }
     if (x1 != x2 || y1 != y2) {
-      EXPECT_EQ(1,2);
+      EXPECT_EQ(1, 2);
     }
     x1 = 0;
     y1 = 0;
