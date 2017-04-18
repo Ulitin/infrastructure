@@ -88,8 +88,7 @@ struct graph {
       }
       if (lenghts > 0) {
         ptr->vrts->add(vrt2, lenghts);
-      }
-      else if (lenghts < 0) {
+      }else if (lenghts < 0) {
         throw std::logic_error("way to the vertex is negative");
       }
     }
