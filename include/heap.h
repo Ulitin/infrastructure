@@ -21,8 +21,7 @@ struct heap {
   int side_child(int ptr);
   void del_el();
 
-public:
-
+ public:
   std::pair<int, int>* find(int first);
   void insert(std::pair<int, int> input);
   void remove(std::pair<int, int>* del);

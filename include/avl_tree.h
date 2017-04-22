@@ -11,7 +11,11 @@ struct avl_tree {
   avl_tree* left;
   avl_tree* right;
 
-  avl_tree() { this == nullptr; }
+  avl_tree() { 
+    left = nullptr;
+    right = nullptr;
+    height = 1;
+  }
   avl_tree(std::pair<int, int> input) {
     var = input;
     left = nullptr;
