@@ -27,7 +27,7 @@ void heap::swap(int ptr1, int ptr2) {
   var[ptr2] = tmp;
 }
 
-int heap::parent (int ptr) {
+int heap::parent(int ptr) {
   return dev((ptr-1), 7);
 }
 

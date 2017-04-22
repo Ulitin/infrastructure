@@ -153,7 +153,7 @@ TEST(heap, add_del) {
   heap test;
   for (int i = 1000; i > 0; i--) test.insert(std::make_pair(i, 0));
   for (int i = 1000; i > 0; i--) test.remove(test.begin());
-  if(!test.empty()) FAIL();
+  if (!test.empty()) FAIL();
 }
 
 TEST(heap, find) {

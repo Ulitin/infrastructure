@@ -10,7 +10,12 @@ struct avl_tree {
   unsigned int height;
   avl_tree* left;
   avl_tree* right;
-  avl_tree(std::pair<int, int> input) { var = input; left = right = 0; height = 1; }
+  avl_tree(std::pair<int, int> input) { 
+    var = input;
+    left = nullptr;
+    right = nullptr;
+    height = 1;
+  }
 };
 
 unsigned int height(avl_tree* p) {
@@ -83,10 +88,10 @@ avl_tree* remove(avl_tree* p, int k) {
   if (k < p->var.first) {
     p->left = remove(p->left, k);
   }
-  else if (k > p->var.first) {
+  if (k > p->var.first) {
     p->right = remove(p->right, k);
   }
-  else if (k <= p->var.first) {
+  if (k == p->var.first) {
     avl_tree* q = p->left;
     avl_tree* r = p->right;
     delete p;
