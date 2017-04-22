@@ -10,6 +10,12 @@ struct avl_tree {
   unsigned int height;
   avl_tree* left;
   avl_tree* right;
+
+  avl_tree() {
+    left = nullptr;
+    right = nullptr;
+    height = 0;
+  }
   avl_tree(std::pair<int, int> input) { 
     var = input;
     left = nullptr;
