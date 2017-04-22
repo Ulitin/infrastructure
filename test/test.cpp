@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "graph.h"
 #include "Dijkstra.h"
+#include "avl_tree.h"
+#include "heap.h"
 
 TEST(vertex, smoke_and_input) {
   vertex v1;
@@ -129,4 +131,41 @@ TEST(Dijkstra, hard_test) {
   int res = alg_dijkstra(1, 7, g1);
   EXPECT_EQ(res, 4);
   delete g1;
+}
+
+TEST(avl_tree, test_on_smoke) {
+  avl_tree *tree = new avl_tree(std::make_pair(1, 0));
+  for (int i = 10; i > 1; i--) tree = insert(tree, std::make_pair(i, 0));
+  for (int i = 10; i > 0; i--) tree = removemin(tree);
+  if (tree != nullptr) FAIL();
+}
+
+TEST(avl_tree, test_find) {
+  avl_tree *tree = new avl_tree(std::make_pair(1, 0));
+  tree = insert(tree, std::make_pair(2, 0));
+  avl_tree *ptr = begin(tree);
+  EXPECT_EQ(ptr->var.first, 1);
+  tree = removemin(tree);
+  tree = removemin(tree);
+}
+
+TEST(heap, add_del) {
+  heap test;
+  for (int i = 1000; i > 0; i--) test.insert(std::make_pair(i, 0));
+  for (int i = 1000; i > 0; i--) test.remove(test.begin());
+  if (!test.empty()) FAIL();
+}
+
+TEST(heap, find) {
+  heap test;
+  test.insert(std::make_pair(1, 5));
+  test.insert(std::make_pair(6, 9));
+  test.insert(std::make_pair(2, 0));
+  test.insert(std::make_pair(12, 1));
+  std::pair<int, int> *f = test.find(12);
+  std::pair<int, int> *minEl = test.begin();
+  EXPECT_EQ(*f, std::make_pair(12, 1));
+  EXPECT_EQ(*minEl, std::make_pair(1, 5));
+  for (int i = 4; i > 0; i--) test.remove(test.begin());
+  if (!test.empty()) FAIL();
 }
