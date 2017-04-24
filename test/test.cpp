@@ -169,3 +169,16 @@ TEST(heap, find) {
   for (int i = 4; i > 0; i--) test.remove(test.begin());
   if (!test.empty()) FAIL();
 }
+
+TEST(Dijkstra_h, find) {
+  graph *g1 = new graph(1);
+  g1->add(1, 2, 5);
+  g1->add(1, 3, 8);
+  g1->add(2, 1, 5);
+  g1->add(3, 1, 8);
+  int res_h = dijkstra_heap(g1);
+  int res_t = dijkstra_tree(g1);
+  EXPECT_EQ(res_h, 4);
+  EXPECT_EQ(res_t, 4);
+  delete g1;
+}

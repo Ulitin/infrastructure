@@ -17,7 +17,7 @@ int heap::child(int ptr) {
 
 bool heap::empty() {
   if (var == nullptr) return true;
-  return true;
+  return false;
 }
 
 void heap::swap(int ptr1, int ptr2) {
