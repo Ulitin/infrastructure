@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "alg.h"
 #include "percolation.h"
-#include "matrixr.h"
 
 TEST(fun_bypass, test1) {
   int **arr = new int*[10];
@@ -74,12 +73,3 @@ TEST(fun_uf, test1) {
   for (int i = 0; i < 10; i++) delete arr[i];
   delete arr;
 }
-
-//TEST(matrix, test1) {
-//  matrix m(10, 5);
-//  *m.find(0, 0) = 5;
-//  if (*m.find(0, 0) != 5) FAIL();
-//  for (int i = 1; i < 10; i++)
-//    for (int j = 1; j < 5; j++)
-//      if (*m.find(i, j) != 0) FAIL();
-//}
