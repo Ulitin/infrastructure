@@ -4,9 +4,7 @@
 struct percolation {
   int *items;
 
-  percolation() { items = new int(0); }
-
-  percolation(int size) {
+  explicit percolation(int size) {
     items = new int[size];
     for (int i = 0; i < size; i++) items[i] = i;
   }
