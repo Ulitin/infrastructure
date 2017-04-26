@@ -3,14 +3,14 @@
 #include "graph.h"
 #include "Dijkstra.h"
 
-void main() {
+int main() {
   printf("path to file: ");
   char path[150];
   scanf("%s", path);
   FILE* fp = fopen(path, "r");
   if (fp == 0) {
     printf("Error open file \n");
-    return;
+    return 0;
   }
   graph *g = new graph(1);
 
