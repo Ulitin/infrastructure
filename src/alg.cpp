@@ -41,7 +41,7 @@ void test_on_grand(int **arr, percolation per, int i, int j, int n, int m) {
   if (arr[i][j] == 1) per.union_(n * m, i * m + j);
 }
 
-void find_earth(int** arr, percolation per, int i, int j, int n, int m) {
+void find_earth(int** arr, percolation per, int i, int j, int m) {
   if (arr[i][j] == 1) {
     if (arr[i - 1][j] == 1) per.union_(i * m + j, (i - 1) * m + j);
     if (arr[i + 1][j] == 1) per.union_(i * m + j, (i + 1) * m + j);
@@ -67,10 +67,9 @@ void fun_uf(int** arr, int n, int m) {
   for (int i = 1; i < n; i++) test_on_grand(arr, per, i, 0, n, m);
   for (int i = 1; i < m; i++) test_on_grand(arr, per, n - 1, i, n, m);
   for (int i = 1; i < n - 1; i++) test_on_grand(arr, per, i, m - 1, n, m);
-  int size = 0;
   for (int i = 1; i < n - 1; i++) {
     for (int j = 1; j < m - 1; j++) {
-      find_earth(arr, per, i, j, n, m);
+      find_earth(arr, per, i, j, m);
     }
   }
   for (int i = 1; i < n - 1; i++) {
