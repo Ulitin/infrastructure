@@ -5,29 +5,22 @@ project(infrastructure)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include(CheckCXXCompilerFlag)
+add_subdirectory(3rdparty)
 
-function(enable_cxx_compiler_flag_if_supported flag)
-    string(FIND "${CMAKE_CXX_FLAGS}" "${flag}" flag_already_set)
-    if(flag_already_set EQUAL -1)
-        check_cxx_compiler_flag("${flag}" flag_supported)
-        if(flag_supported)
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" PARENT_SCOPE)
-        endif()
-    endif()
-endfunction()
-
-enable_cxx_compiler_flag_if_supported("-Wall")
 if (CMAKE_COMPILER_IS_GNUCXX)
-    enable_cxx_compiler_flag_if_supported("-Werror")
+    add_compile_options(-Wall -Wpedantic -Wextra -Werror)
 endif()
+
+set(LINTING_APP ${CMAKE_SOURCE_DIR}/3rdparty/utils/cpplint.py)
+set(LINTING_COMMAND python ${LINTING_APP} --extensions=cpp,hpp,h,cc,c)
 
 include_directories(include)
 
-add_subdirectory(3rdparty)
 add_subdirectory(src)
 add_subdirectory(app)
 add_subdirectory(test)
