@@ -9,7 +9,7 @@ void main() {
   scanf("%s", path);
   FILE* fp = fopen(path, "r");
   if (fp == 0) {
-    printf("Error open file");
+    printf("Error open file \n");
     return;
   }
   graph *g = new graph(1);
