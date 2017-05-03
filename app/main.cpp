@@ -1,13 +1,8 @@
-#include <stdio.h>
-#include <limits.h>
 #include "graph.h"
 #include "Dijkstra.h"
 
 int main() {
-  printf("path to file: ");
-  char path[150];
-  scanf("%s", path);
-  FILE* fp = fopen(path, "r");
+  FILE* fp = fopen("Graph", "r");
   if (fp == 0) {
     printf("Error open file \n");
     return 0;

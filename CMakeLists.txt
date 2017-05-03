@@ -25,4 +25,3 @@ add_subdirectory(src)
 add_subdirectory(app)
 add_subdirectory(test)
 
-configure_file(Graph.txt GRAPH)

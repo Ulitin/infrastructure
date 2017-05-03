@@ -5,7 +5,7 @@
 
 using std::cout;
 
-struct heap {
+class heap {
   std::pair<int, int> *var = nullptr;
   int size = 0;
 

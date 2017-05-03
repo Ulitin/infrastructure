@@ -13,3 +13,5 @@ add_custom_target(${target}_lint ALL
                   COMMAND ${LINTING_COMMAND} ${CPPS} ${HPPS}
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                   SOURCES ${LINTING_APP} ${lint_config})
+
+configure_file(Graph.txt GRAPH)
