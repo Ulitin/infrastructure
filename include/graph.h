@@ -5,6 +5,12 @@
 
 using std::cout;
 
+struct rib {
+  int lenght = 0;
+  int ribStart = 0;
+  int ribFinish = 0;
+};
+
 struct vertex {
   std::pair<int, int> *vrt;
   vertex *next = nullptr;
@@ -46,6 +52,23 @@ struct vertex {
     }
   }
 
+  rib min_() {
+    auto ptr = this;
+    if (ptr == nullptr) {
+      throw std::logic_error("don't cry");
+    }
+    rib rb;
+    rb.ribStart = ptr->vrt->first;
+    while (ptr != nullptr) {
+      if ((rb.lenght == 0) || (rb.lenght > ptr->vrt->second)) {
+        rb.lenght = ptr->vrt->second;
+        rb.ribFinish = ptr->vrt->first;
+      }
+      ptr = ptr->next;
+    }
+    return rb;
+  }
+
   ~vertex() {
     vertex *tmp = nullptr;
     vertex *del = this;
@@ -60,6 +83,7 @@ struct vertex {
 struct graph {
   vertex *vrts;
   graph *next = nullptr;
+  //  int ribs = 0;
 
   explicit graph(int number = 0, int lenghts = 0) {
     vrts = new vertex(number, lenghts);
@@ -82,6 +106,7 @@ struct graph {
         ptr = ptr->next;
       }
       if (ptr->next == nullptr && ptr->vrts->vrt->first != vrt1) {
+        //  ribs++;
         this->add(vrt1);
         ptr = ptr->next;
       }
@@ -94,7 +119,17 @@ struct graph {
     ptr->vrts->del(0);  //  improve
   }
 
-  vertex *find(int vrt) {
+  int size_vrt() {
+    int size = 0;
+    graph *ptr = this;
+    while (ptr != nullptr) {
+      size++;
+      ptr = ptr->next;
+    }
+    return size;
+  }
+
+  vertex* find(int vrt) {
     graph *ptr = this;
     if (ptr == nullptr) return nullptr;
     while (ptr->vrts->vrt->first != vrt) {

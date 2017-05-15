@@ -35,7 +35,7 @@ int main() {
     scanf("%d", &mode);
   }
   int road;
-  if (mode == 1) road = dijkstra_heap(g);
-  if (mode == 2) road = dijkstra_tree(g);
+  //if (mode == 1) road = dijkstra_heap(g);
+  //if (mode == 2) road = dijkstra_tree(g);
   printf("road - %d\n", road);
 }
