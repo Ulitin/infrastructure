@@ -1,41 +1,41 @@
-#ifndef INCLUDE_GRAPH_H_
-#define INCLUDE_GRAPH_H_
+#ifndef INCLUDE_RIB_H_
+#define INCLUDE_RIB_H_
 #include <stdexcept>
 #include <iostream>
 
 using std::cout;
 
 struct vertex {
-  std::pair<int, int> *vrt;
+  std::pair<int, int> *ribs;
   vertex *next = nullptr;
 
-  explicit vertex(int number = 1, int lenghts = 0) {
-    vrt = new std::pair<int, int>;
-    vrt->first = number;
-    vrt->second = lenghts;
+  explicit vertex(int x = 1, int y = 0) {
+    ribs = new std::pair<int, int>;
+    ribs->first = x;
+    ribs->second = y;
   }
 
-  void add(int number, int lengths) {
+  void add(int x, int y) {
     bool flag = true;
     vertex* ptr = this;
     while (flag && ptr->next != nullptr) {
-      if (ptr->vrt->first == number) {
+      if (ptr->ribs->first == x) {
         flag = false;
-        ptr->vrt->first = number;
-        ptr->vrt->second = lengths;
+        ptr->ribs->first = x;
+        ptr->ribs->second = y;
       }
       ptr = ptr->next;
     }
     if (flag) {
-      ptr->next = new vertex(number, lengths);
+      ptr->next = new vertex(x, y);
     }
   }
 
-  void del(int number) {
+  void del(int x, int y) {
     auto ptr = this;
     vertex *buf = nullptr;
     while (ptr != nullptr) {
-      if (ptr->vrt->first == number) {
+      if (ptr->ribs->first == x  && ptr->ribs->second == y) {
         if (buf != nullptr) buf->next = ptr->next;
         ptr->next = nullptr;
         delete ptr;
@@ -49,8 +49,8 @@ struct vertex {
   bool rib_in(int a, int b) {
     vertex *ptr = this;
     while (ptr != nullptr) {
-      if ((ptr->vrt->first = a) && (ptr->vrt->second = b)) return true;
-      if ((ptr->vrt->first = b) && (ptr->vrt->second = a)) return true;
+      if ((ptr->ribs->first == a) && (ptr->ribs->second == b)) return true;
+      if ((ptr->ribs->first == b) && (ptr->ribs->second == a)) return true;
       ptr = ptr->next;
     }
     return false;
@@ -61,10 +61,10 @@ struct vertex {
     vertex *del = this;
     while (del != nullptr) {
       tmp = del->next;
-      delete del->vrt;
+      delete del->ribs;
       del = tmp;
     }
   }
 };
 
-#endif  // INCLUDE_GRAPH_H_
+#endif  // INCLUDE_RIB_H_

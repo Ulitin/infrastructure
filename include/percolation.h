@@ -6,7 +6,8 @@ struct percolation {
 
   explicit percolation(int size) {
     items = new int[size];
-    for (int i = 0; i < size; i++) items[i] = i;
+    for (int i = 0; i < size; i++)
+      items[i] = i;
   }
 
   void union_(int el1, int el2);
