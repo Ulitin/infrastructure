@@ -6,7 +6,7 @@ int main() {
   printf("Which algorithm to use?\n");
   int numAlg = -1;
   while (numAlg != 1 && numAlg != 2) {
-    printf("\n1 - Kruskal\n2 - Prim\n");
+    printf("1 - Kruskal\n2 - Prim\n");
     scanf("%d", &numAlg);
   }
 
@@ -19,14 +19,14 @@ int main() {
     graph g;
     g.input_via_txt(fp);
     graph *res = prim(&g);
-    //res->out_via_txt("Resalt.gv");
+    res->out_via_txt();
     delete res;
   }
-  if (numAlg == 2) {
+  if (numAlg == 1) {
     graphMI g;
     g.input_via_txt(fp);
     graphMI *res = kruskal(g);
-    //res->out_via_txt("Resalt.gv");
+    res->out_via_txt();
     delete res;
   }
   fclose(fp);

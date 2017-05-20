@@ -5,6 +5,10 @@
 
 using std::cout;
 
+void start(FILE *fp);
+void add_rib(FILE *fp, int vrt1, int vrt2, int len);
+void stop(FILE *fp);
+
 struct rib {
   int lenght = 0;
   int ribStart = 0;
@@ -164,9 +168,26 @@ struct graph {
     }
   }
 
-  //void out_via_txt(char *c) {
-
-  //}
+  void out_via_txt() {
+    FILE* fp = fopen("RESALT", "w");
+    if (fp == 0) {
+      printf("Error open file \n");
+      return;
+    }
+    start(fp);
+    graph *ptrG = this;
+    while (ptrG != nullptr) {
+      vertex *ptrVrt = ptrG->vrts;
+      int start = ptrVrt->vrt->first;
+      ptrVrt = ptrVrt->next;
+      while (ptrVrt != nullptr) {
+        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second);
+        ptrVrt = ptrVrt->next;
+      }
+      ptrG = ptrG->next;
+    }
+    stop(fp);
+  }
 
   ~graph() {
     graph *del = this;
@@ -283,6 +304,19 @@ struct graphMI {
         i++;
       }
     }
+  }
+
+  void out_via_txt() {
+    FILE* fp = fopen("RESALT", "w");
+    if (fp == 0) {
+      printf("Error open file \n");
+      return;
+    }
+    start(fp);
+    for (int i = 1; i <= sizeVrt; i++) {
+      add_rib(fp, ribin(i), ribout(i), mas[i - 1][ribin(i) - 1]);
+    }
+    stop(fp);
   }
 
   ~graphMI() {

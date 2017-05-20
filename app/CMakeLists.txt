@@ -15,3 +15,4 @@ add_custom_target(${target}_lint ALL
                   SOURCES ${LINTING_APP} ${lint_config})
 
 configure_file(Graph.txt GRAPH)
+configure_file(Resalt.gv RESALT)
