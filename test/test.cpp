@@ -4,6 +4,8 @@
 #include "avl_tree.h"
 #include "heap.h"
 #include "Primalg.h"
+#include "percolation.h"
+#include "Kruskal.h"
 
 TEST(vertex, smoke_and_input) {
   vertex v1;
@@ -146,6 +148,43 @@ TEST(graph, find_min) {
   delete g1;
 }
 
+TEST(graphMI, test_on_smoke) {
+  graphMI g(3);
+  g.add(1, 2, 5);
+  g.add(1, 3, 8);
+  int **mas = g.mas;
+  EXPECT_EQ(mas[0][0], 5);
+  EXPECT_EQ(mas[0][1], 5);
+  EXPECT_EQ(mas[1][0], 8);
+  EXPECT_EQ(mas[1][2], 8);
+  mas[0][0] = 0;
+  mas[0][1] = 0;
+  mas[1][0] = 0;
+  mas[1][2] = 0;
+  for(int i = 0; i < 2; i++)
+    for(int j = 0; j < 2; j++)
+      EXPECT_EQ(mas[i][j], 0);
+}
+
+TEST(graphMI, test_on_sort) {
+  graphMI g(3);
+  g.add(1, 3, 2);
+  g.add(2, 3, 1);
+  g.sort();
+  int **mas = g.mas;
+  EXPECT_EQ(mas[0][1], 1);
+  EXPECT_EQ(mas[0][2], 1);
+  EXPECT_EQ(mas[1][0], 2);
+  EXPECT_EQ(mas[1][2], 2);
+  mas[0][1] = 0;
+  mas[0][2] = 0;
+  mas[1][0] = 0;
+  mas[1][2] = 0;
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 2; j++)
+      EXPECT_EQ(mas[i][j], 0);
+}
+
 TEST(avl_tree, test_on_smoke) {
   avl_tree *tree = new avl_tree(std::make_pair(1, 0));
   for (int i = 10; i > 1; i--) tree = insert(tree, std::make_pair(i, 0));
@@ -206,6 +245,16 @@ TEST(heap, find) {
   if (!test.empty()) FAIL();
 }
 
+TEST(percolation, test1) {
+  percolation p(10);
+  p.union_(10, 1);
+  p.union_(1, 5);
+  p.union_(5, 9);
+  p.union_(2, 9);
+  p.union_(2, 7);
+  EXPECT_EQ(p.find_(7), p.find_(10));
+}
+
 TEST(Primalg, test_on_smoke) {
   graph *g1 = new graph(1);
   g1->add(1, 2, 1);
@@ -221,5 +270,76 @@ TEST(Primalg, test_on_smoke) {
   g1->add(5, 1, 1);
   g1->add(5, 2, 3);
   graph *g = prim(g1);
+  EXPECT_EQ(g->vrts->vrt->first, 1);
+  EXPECT_EQ(g->vrts->vrt->second, 0);
+  EXPECT_EQ(g->vrts->next->vrt->first, 2);
+  EXPECT_EQ(g->vrts->next->vrt->second, 1);
+  EXPECT_EQ(g->vrts->next->next->vrt->first, 5);
+  EXPECT_EQ(g->vrts->next->next->vrt->second, 1);
+  EXPECT_EQ(g->vrts->next->next->next->vrt->first, 3);
+  EXPECT_EQ(g->vrts->next->next->next->vrt->second, 1);
+  EXPECT_EQ(g->vrts->next->next->next->next->vrt->first, 4);
+  EXPECT_EQ(g->vrts->next->next->next->next->vrt->second, 1);
   delete g1;
+}
+
+TEST(Primalg, test_in_normal_graph) {
+  graph *g1 = new graph(1);
+  g1->add(1, 2, 5);
+  g1->add(1, 3, 8);
+  g1->add(1, 4, 1);
+  g1->add(1, 5, 2);
+  g1->add(1, 6, 5);
+  g1->add(2, 1, 5);
+  g1->add(2, 5, 3);
+  g1->add(3, 1, 8);
+  g1->add(3, 4, 8);
+  g1->add(3, 6, 1);
+  g1->add(4, 3, 8);
+  g1->add(4, 6, 8);
+  g1->add(5, 1, 2);
+  g1->add(5, 2, 3);
+  g1->add(6, 1, 5);
+  g1->add(6, 4, 8);
+  graph *g = prim(g1);
+  delete g1;
+}
+
+TEST(Kruskal, test_in_normal_graph) {
+  graphMI g(6);
+  g.add(1, 2, 5);
+  g.add(1, 3, 8);
+  g.add(1, 4, 1);
+  g.add(1, 5, 4);
+  g.add(1, 6, 5);
+  g.add(2, 5, 3);
+  g.add(3, 4, 8);
+  g.add(3, 6, 2);
+  g.add(4, 6, 8);
+  g.add(6, 4, 3);
+  graphMI *res = kruskal(g);
+  int **mas = res->mas;
+  EXPECT_EQ(mas[0][0], 1);
+  EXPECT_EQ(mas[0][3], 1);
+  EXPECT_EQ(mas[1][2], 2);
+  EXPECT_EQ(mas[1][5], 2);
+  EXPECT_EQ(mas[2][1], 3);
+  EXPECT_EQ(mas[2][4], 3);
+  EXPECT_EQ(mas[3][5], 3);
+  EXPECT_EQ(mas[3][3], 3);
+  EXPECT_EQ(mas[4][0], 4);
+  EXPECT_EQ(mas[4][4], 4);
+  mas[0][0] = 0;
+  mas[0][3] = 0;
+  mas[1][2] = 0;
+  mas[1][5] = 0;
+  mas[2][1] = 0;
+  mas[2][4] = 0;
+  mas[3][5] = 0;
+  mas[3][3] = 0;
+  mas[4][0] = 0;
+  mas[4][4] = 0;
+  for (int i = 0; i < res->sizeRib; i++)
+    for (int j = 0; j < res->sizeVrt; j++)
+      EXPECT_EQ(mas[i][j], 0);
 }

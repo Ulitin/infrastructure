@@ -83,7 +83,6 @@ struct vertex {
 struct graph {
   vertex *vrts;
   graph *next = nullptr;
-  //  int ribs = 0;
 
   explicit graph(int number = 0, int lenghts = 0) {
     vrts = new vertex(number, lenghts);
@@ -139,6 +138,36 @@ struct graph {
     return ptr->vrts;
   }
 
+  void input_via_txt(FILE *fp) {
+    delete this->next;
+    this->next = nullptr;
+    delete this->vrts;
+    this->vrts = new vertex(1);
+    int ch = 0;
+    int i = 1;
+    int vertex = 1;
+    while ((ch = fgetc(fp)) != EOF) {
+      if (ch == '#') {
+        ch = fgetc(fp);
+        while (ch != '\n') ch = fgetc(fp);
+        ch = fgetc(fp);
+      }
+      if (ch == ' ') ch = fgetc(fp);
+      if (ch == '\n') {
+        vertex++;
+        i = 1;
+      }
+      if (ch >= 48 && ch <= 57) {
+        this->add(vertex, i, ch - 48);
+        i++;
+      }
+    }
+  }
+
+  //void out_via_txt(char *c) {
+
+  //}
+
   ~graph() {
     graph *del = this;
     graph *ptr = nullptr;
@@ -148,6 +177,121 @@ struct graph {
       del = ptr;
     }
   }
+};
+
+struct graphMI {
+  int **mas = nullptr;
+  int sizeRib = 0;
+  int sizeVrt;
+
+  graphMI(int sizeV = 1) {
+    sizeVrt = sizeV;
+    mas = new int*[1];
+    mas[0] = new int[sizeV];
+    for (int j = 0; j < sizeVrt; j++) mas[0][j] = 0;
+  }
+
+  graphMI(graphMI &copy) {
+    mas = new int*[copy.sizeRib];
+    sizeRib = copy.sizeRib;
+    sizeVrt = copy.sizeVrt;
+    for (int i = 0; i < sizeRib; i++) {
+      mas[i] = new int[sizeVrt];
+      for (int j = 0; j < sizeVrt; j++) {
+        mas[i][j] = copy.mas[i][j];
+      }
+    }
+  }
+
+  void add(int vrt1, int vrt2, int lenghts) {
+    if (sizeRib != 0) {
+      int **new_mas = new int*[sizeRib + 1];
+      for (int i = 0; i < sizeRib; i++) {
+        new_mas[i] = new int[sizeVrt];
+        for (int j = 0; j < sizeVrt; j++) {
+          new_mas[i][j] = mas[i][j];
+        }
+        delete mas[i];
+      }
+      delete mas;
+      new_mas[sizeRib] = new int[sizeVrt];
+      for (int i = 0; i < sizeVrt; i++) new_mas[sizeRib][i] = 0;
+      new_mas[sizeRib][vrt1 - 1] = lenghts;
+      new_mas[sizeRib][vrt2 - 1] = lenghts;
+      mas = new_mas;
+      sizeRib++;
+    }
+    if (sizeRib == 0) {
+      mas[sizeRib][vrt1 - 1] = lenghts;
+      mas[sizeRib][vrt2 - 1] = lenghts;
+      sizeRib++;
+    }
+  }
+
+  void sort() {  //  sort rib ascending
+    for (int i = 0; i < sizeRib; i++)
+      for (int j = i + 1; j < sizeRib; j++)
+        if (this->greater(mas[i],mas[j])) this->swap(i, j);
+  }
+
+  bool greater(int *left, int *right) {
+    int l = 0, r = 0;
+    while (left[l] == 0) l++;
+    while (right[r] == 0) r++;
+    return left[l] > right[r];
+  }
+
+  void swap(int a, int b) {
+    int *tmp = mas[a];
+    mas[a] = mas[b];
+    mas[b] = tmp;
+  }
+
+  int ribin(int rib) {
+    int in = sizeVrt - 1;
+    while (mas[rib][in] == 0) in--;
+    return ++in;
+  }
+
+  int ribout(int rib) {
+    int out = 0;
+    while (mas[rib][out] == 0) out++;
+    return ++out;
+  }
+
+  void input_via_txt(FILE *fp) {
+    for (int i = sizeRib; i > 0; i--) delete mas[i];
+    for (int j = 0; j < sizeVrt; j++) mas[0][j] = 0;
+    sizeRib = 0;
+    sizeVrt = 0;
+    int ch = 0;
+    int i = 1;
+    int vertex = 1;
+    while ((ch = fgetc(fp)) != EOF) {
+      if (ch == '#') {
+        ch = fgetc(fp);
+        while (ch != '\n') ch = fgetc(fp);
+        ch = fgetc(fp);
+      }
+      if (ch == ' ') ch = fgetc(fp);
+      if (ch == '\n') {
+        vertex++;
+        i = 1;
+      }
+      if (ch >= 48 && ch <= 57) {
+        this->add(vertex, i, ch - 48);
+        i++;
+      }
+    }
+  }
+
+  ~graphMI() {
+    for (int i = 0; i < sizeRib; i++) {
+      delete mas[i];
+    }
+    delete mas;
+  }
+
 };
 
 #endif  // INCLUDE_GRAPH_H_

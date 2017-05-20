@@ -1,41 +1,34 @@
+#include "Primalg.h"
+#include "Kruskal.h"
 #include "graph.h"
-#include "Dijkstra.h"
 
 int main() {
-  FILE* fp = fopen("Graph", "r");
+  printf("Which algorithm to use?\n");
+  int numAlg = -1;
+  while (numAlg != 1 && numAlg != 2) {
+    printf("\n1 - Kruskal\n2 - Prim\n");
+    scanf("%d", &numAlg);
+  }
+
+  FILE *fp = fopen("Graph", "r");
   if (fp == 0) {
     printf("Error open file \n");
     return 0;
   }
-  graph *g = new graph(1);
-
-  int ch = 0;
-  int i = 1;
-  int vertex = 1;
-  while ((ch = fgetc(fp)) != EOF) {
-    if (ch == '#') {
-      ch = fgetc(fp);
-      while (ch != '\n') ch = fgetc(fp);
-      ch = fgetc(fp);
-    }
-    if (ch == ' ') ch = fgetc(fp);
-    if (ch == '\n') {
-      vertex++;
-      i = 1;
-    }
-    if (ch >= 48 && ch <= 57) {
-      g->add(vertex, i, ch - 48);
-      i++;
-    }
+  if (numAlg == 2) {
+    graph g;
+    g.input_via_txt(fp);
+    graph *res = prim(&g);
+    //res->out_via_txt("Resalt.gv");
+    delete res;
+  }
+  if (numAlg == 2) {
+    graphMI g;
+    g.input_via_txt(fp);
+    graphMI *res = kruskal(g);
+    //res->out_via_txt("Resalt.gv");
+    delete res;
   }
   fclose(fp);
-  int mode = -1;
-  while (mode == -1) {
-    printf("\n1 - Heap\n2 - AVL-tree\n");
-    scanf("%d", &mode);
-  }
-  int road;
-  //if (mode == 1) road = dijkstra_heap(g);
-  //if (mode == 2) road = dijkstra_tree(g);
-  printf("road - %d\n", road);
+  printf("Resalt in Resalt.gv");
 }

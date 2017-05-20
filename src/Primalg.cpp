@@ -26,10 +26,6 @@ int* vrt_in_graph(graph *g) {  //  generates an array of vertices of the graph
   return vrt;
 }
 
-//graph* prim_step(graph *g) {
-//  return nullptr;
-//}
-
 bool find_vrt(int *vrtGraph, rib *rb, int size) {
   for (int i = 0; i < size; i++) {
     if (vrtGraph[i] == rb->ribFinish) {
@@ -47,7 +43,7 @@ graph* prim(graph *g) {
   int size = g->size_vrt();
   heap *ribs = new heap;  //  for store missed vertices
   int *vrtGraph = vrt_in_graph(g);  //  vertex which don't tree
-  int vrt = vrtGraph[0]; //  vrtGraph[0];
+  int vrt = vrtGraph[0];
   vrtGraph[0] = -1;
   graph *tree = new graph(vrt);
   for (int i = 1; i < size; i++) {
@@ -57,7 +53,7 @@ graph* prim(graph *g) {
     while (!find_vrt(vrtGraph, rb, size)) {
       ribs->remove(ribs->begin());
     };
-    tree->add(rb->ribStart, rb->ribFinish, rb->lenght);
+    tree->add(rb->ribStart, rb->ribFinish, dijkstra(rb->ribStart, rb->ribFinish, g));
     vrt = rb->ribFinish;
     ribs->remove(ribs->begin());
   }
