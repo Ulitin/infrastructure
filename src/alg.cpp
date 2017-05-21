@@ -2,10 +2,12 @@
 #include "percolation.h"
 #include "rib.h"
 
-bool confl(int group, percolation *sociaty, int size, int people, vertex *list) {
+bool confl(int people, percolation *sociaty, int size, int group, vertex *list) {
   for (int i = 0; i < size; i++) {
     if (sociaty->items[i] == group)
-      if (list->rib_in(i, people)) return true;
+      for(int j = 0; j < size; j++)
+        if(sociaty->items[j] == sociaty->find_(people))
+          if (list->rib_in(i, j)) return true;
   }
   return false;
 }
@@ -13,7 +15,7 @@ bool confl(int group, percolation *sociaty, int size, int people, vertex *list) 
 void add_people(percolation *sociaty, int size, int people, vertex *list, int sizeG) {
   for (int i = 0; i < size; i++) {
     if (people != i) {
-      if (!confl(sociaty->find_(people), sociaty, size, i, list)) {
+      if (!confl(people, sociaty, size, sociaty->find_(i), list)) {
         sociaty->union_(people, i);
         sizeG--;
       }
