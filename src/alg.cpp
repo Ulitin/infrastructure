@@ -4,10 +4,13 @@
 
 bool confl(int people, percolation *sociaty, int size, int group, vertex *list) {
   for (int i = 0; i < size; i++) {
-    if (sociaty->items[i] == group)
-      for(int j = 0; j < size; j++)
-        if(sociaty->items[j] == sociaty->find_(people))
+    if (sociaty->items[i] == group) {
+      for (int j = 0; j < size; j++) {
+        if (sociaty->items[j] == sociaty->find_(people)) {
           if (list->rib_in(i, j)) return true;
+        }
+      }
+    }
   }
   return false;
 }
@@ -35,4 +38,3 @@ percolation* alg(percolation *sociaty, int size, vertex *list, int *sizeGroup) {
   sizeGroup[0] = sizeG;
   return sociaty;
 }
- 
