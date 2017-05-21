@@ -212,7 +212,7 @@ struct graphMI {
     for (int j = 0; j < sizeVrt; j++) mas[0][j] = 0;
   }
 
-  graphMI(const graphMI &copy) {
+  graphMI(const graphMI & const copy) {
     mas = new int*[copy.sizeRib];
     sizeRib = copy.sizeRib;
     sizeVrt = copy.sizeVrt;
