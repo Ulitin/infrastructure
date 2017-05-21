@@ -8,7 +8,7 @@ struct Node {
 struct percolation {
   Node *items = nullptr;
 
-  percolation(int size = 0);
+  explicit percolation(int size = 0);
   void union_(int el1, int el2);
   Node* find_(int key);
 };

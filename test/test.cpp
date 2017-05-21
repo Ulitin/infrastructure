@@ -73,7 +73,6 @@ TEST(graph, enter_graph_manually) {
   EXPECT_EQ(g1.next->next->vrts->vrt->second, 0);
   EXPECT_EQ(g1.next->next->vrts->next->vrt->first, 1);
   EXPECT_EQ(g1.next->next->vrts->next->vrt->second, 8);
-  //  EXPECT_EQ(g1.ribs, 2);
 }
 
 TEST(graph, test_add_and_find) {
@@ -114,7 +113,6 @@ TEST(graph, test_add_and_find) {
   EXPECT_EQ(g.next->next->vrts->vrt->second, 0);
   EXPECT_EQ(g.next->next->vrts->next->vrt->first, 1);
   EXPECT_EQ(g.next->next->vrts->next->vrt->second, 8);
-  //  EXPECT_EQ(g.ribs, 2);
 }
 
 TEST(graph, find_min) {
@@ -161,8 +159,8 @@ TEST(graphMI, test_on_smoke) {
   mas[0][1] = 0;
   mas[1][0] = 0;
   mas[1][2] = 0;
-  for(int i = 0; i < 2; i++)
-    for(int j = 0; j < 2; j++)
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 2; j++)
       EXPECT_EQ(mas[i][j], 0);
 }
 

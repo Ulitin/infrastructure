@@ -2,7 +2,7 @@
 #include "heap.h"
 #include "Dijkstra.h"
 
-void add_ribs(heap *ribs, vertex *vrt, int road) { //  add vertices in ribs from vrt
+void add_ribs(heap *ribs, vertex *vrt, int road) {  //  add vertices in ribs from vrt
   vertex *ptr = vrt;
   rib rb;
   rb.ribStart = ptr->vrt->first;
@@ -52,7 +52,7 @@ graph* prim(graph *g) {
     rib *rb = ribs->begin();
     while (!find_vrt(vrtGraph, rb, size)) {
       ribs->remove(ribs->begin());
-    };
+    }
     tree->add(rb->ribStart, rb->ribFinish, dijkstra(rb->ribStart, rb->ribFinish, g));
     vrt = rb->ribFinish;
     ribs->remove(ribs->begin());

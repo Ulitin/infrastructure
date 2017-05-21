@@ -205,14 +205,14 @@ struct graphMI {
   int sizeRib = 0;
   int sizeVrt;
 
-  graphMI(int sizeV = 1) {
+  explicit graphMI(int sizeV = 1) {
     sizeVrt = sizeV;
     mas = new int*[1];
     mas[0] = new int[sizeV];
     for (int j = 0; j < sizeVrt; j++) mas[0][j] = 0;
   }
 
-  graphMI(graphMI &copy) {
+  explicit graphMI(graphMI &copy) {
     mas = new int*[copy.sizeRib];
     sizeRib = copy.sizeRib;
     sizeVrt = copy.sizeVrt;
@@ -252,7 +252,7 @@ struct graphMI {
   void sort() {  //  sort rib ascending
     for (int i = 0; i < sizeRib; i++)
       for (int j = i + 1; j < sizeRib; j++)
-        if (this->greater(mas[i],mas[j])) this->swap(i, j);
+        if (this->greater(mas[i], mas[j])) this->swap(i, j);
   }
 
   bool greater(int *left, int *right) {
@@ -325,7 +325,6 @@ struct graphMI {
     }
     delete mas;
   }
-
 };
 
 #endif  // INCLUDE_GRAPH_H_

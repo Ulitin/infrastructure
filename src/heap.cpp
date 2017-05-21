@@ -54,7 +54,7 @@ int heap::find_ptr(rib *el) {
   return i;
 }
 
-rib* heap::find(int rb) { // find finish on rib
+rib* heap::find(int rb) {  //  find finish on rib
   int i = 0;
   while (var[i].ribFinish != rb) { i++; }
   return &var[i];
