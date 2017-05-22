@@ -300,6 +300,20 @@ TEST(Primalg, test_in_normal_graph) {
   g1->add(6, 1, 5);
   g1->add(6, 4, 8);
   graph *g = prim(g1);
+  EXPECT_EQ(g->vrts->vrt->first, 1);
+  EXPECT_EQ(g->vrts->vrt->second, 0);
+  EXPECT_EQ(g->vrts->next->vrt->first, 4);
+  EXPECT_EQ(g->vrts->next->vrt->second, 1);
+  EXPECT_EQ(g->vrts->next->next->vrt->first, 5);
+  EXPECT_EQ(g->vrts->next->next->vrt->second, 2);
+  EXPECT_EQ(g->vrts->next->next->next->vrt->first, 6);
+  EXPECT_EQ(g->vrts->next->next->next->vrt->second, 5);
+  EXPECT_EQ(g->vrts->next->next->next->next->vrt->first, 3);
+  EXPECT_EQ(g->vrts->next->next->next->next->vrt->second, 8);
+  EXPECT_EQ(g->next->vrts->vrt->first, 5);
+  EXPECT_EQ(g->next->vrts->vrt->second, 0);
+  EXPECT_EQ(g->next->vrts->next->vrt->first, 2);
+  EXPECT_EQ(g->next->vrts->next->vrt->second, 3);
   delete g1;
 }
 
