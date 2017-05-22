@@ -181,7 +181,7 @@ struct graph {
       int start = ptrVrt->vrt->first;
       ptrVrt = ptrVrt->next;
       while (ptrVrt != nullptr) {
-        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "red");
+        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "black");
         ptrVrt = ptrVrt->next;
       }
       ptrG = ptrG->next;
@@ -191,7 +191,7 @@ struct graph {
       int start = ptrVrt->vrt->first;
       ptrVrt = ptrVrt->next;
       while (ptrVrt != nullptr) {
-        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "black");
+        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "red");
         ptrVrt = ptrVrt->next;
       }
       g = g->next;
@@ -235,6 +235,29 @@ struct graphMI {
   }
 
   void add(int vrt1, int vrt2, int lenghts) {
+    int new_size = 0;
+    if (vrt1 > sizeVrt || vrt2 > sizeVrt) {
+      if (vrt1 < vrt2) new_size = vrt2;
+      else if (vrt1 >= vrt2) new_size = vrt1;
+    }
+    if (new_size != 0) {
+      int **new_mas = new int*[sizeRib];
+      int size = sizeRib;
+      if (size == 0) size++;
+      for (int i = 0; i < size; i++) {
+        new_mas[i] = new int[new_size];
+        for (int j = 0; j < sizeVrt; j++) {
+          new_mas[i][j] = mas[i][j];
+        }
+        for (int j = sizeVrt; j < new_size; j++) {
+          new_mas[i][j] = 0;
+        }
+        if(i < sizeRib) delete mas[i];
+      }
+      if(sizeRib > 1)delete mas;
+      sizeVrt = new_size;
+      mas = new_mas;
+    }
     if (sizeRib != 0) {
       int **new_mas = new int*[sizeRib + 1];
       for (int i = 0; i < sizeRib; i++) {
@@ -310,7 +333,7 @@ struct graphMI {
         i = 1;
       }
       if (ch >= 48 && ch <= 57) {
-        this->add(vertex, i, ch - 48);
+        if(vertex < i) this->add(vertex, i, ch - 48);
         i++;
       }
     }
@@ -323,11 +346,11 @@ struct graphMI {
       return;
     }
     start(fp);
-    for (int i = 1; i <= g->sizeVrt; i++) {
-      add_rib(fp, ribin(i), ribout(i), g->mas[i - 1][ribin(i) - 1], "black");
+    for (int i = 0; i < sizeRib; i++) {
+      add_rib(fp, ribin(i), ribout(i), mas[i][ribin(i) - 1], "black");
     }
-    for (int i = 1; i <= sizeVrt; i++) {
-      add_rib(fp, ribin(i), ribout(i), mas[i - 1][ribin(i) - 1], "red");
+    for (int i = 0; i < g->sizeRib; i++) {
+      add_rib(fp, g->ribin(i), g->ribout(i), g->mas[i][g->ribin(i) - 1], "red");
     }
     stop(fp);
   }
