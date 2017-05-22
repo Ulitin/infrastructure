@@ -19,14 +19,14 @@ int main() {
     graph g;
     g.input_via_txt(fp);
     graph *res = prim(&g);
-    res->out_via_txt();
+    g.out_via_txt(res);
     delete res;
   }
   if (numAlg == 1) {
     graphMI g;
     g.input_via_txt(fp);
     graphMI *res = kruskal(g);
-    res->out_via_txt();
+    g.out_via_txt(res);
     delete res;
   }
   fclose(fp);

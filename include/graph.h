@@ -6,7 +6,7 @@
 using std::cout;
 
 void start(FILE *fp);
-void add_rib(FILE *fp, int vrt1, int vrt2, int len);
+void add_rib(FILE *fp, int vrt1, int vrt2, int len, char *color);
 void stop(FILE *fp);
 
 struct rib {
@@ -168,7 +168,7 @@ struct graph {
     }
   }
 
-  void out_via_txt() {
+  void out_via_txt(graph *g) {
     FILE* fp = fopen("RESALT", "w");
     if (fp == 0) {
       printf("Error open file \n");
@@ -181,10 +181,20 @@ struct graph {
       int start = ptrVrt->vrt->first;
       ptrVrt = ptrVrt->next;
       while (ptrVrt != nullptr) {
-        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second);
+        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "red");
         ptrVrt = ptrVrt->next;
       }
       ptrG = ptrG->next;
+    }
+    while (g != nullptr) {
+      vertex *ptrVrt = g->vrts;
+      int start = ptrVrt->vrt->first;
+      ptrVrt = ptrVrt->next;
+      while (ptrVrt != nullptr) {
+        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "black");
+        ptrVrt = ptrVrt->next;
+      }
+      g = g->next;
     }
     stop(fp);
   }
@@ -306,15 +316,18 @@ struct graphMI {
     }
   }
 
-  void out_via_txt() {
+  void out_via_txt(graphMI *g) {
     FILE* fp = fopen("RESALT", "w");
     if (fp == 0) {
       printf("Error open file \n");
       return;
     }
     start(fp);
+    for (int i = 1; i <= g->sizeVrt; i++) {
+      add_rib(fp, ribin(i), ribout(i), g->mas[i - 1][ribin(i) - 1], "black");
+    }
     for (int i = 1; i <= sizeVrt; i++) {
-      add_rib(fp, ribin(i), ribout(i), mas[i - 1][ribin(i) - 1]);
+      add_rib(fp, ribin(i), ribout(i), mas[i - 1][ribin(i) - 1], "red");
     }
     stop(fp);
   }
