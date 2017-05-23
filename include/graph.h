@@ -252,9 +252,9 @@ struct graphMI {
         for (int j = sizeVrt; j < new_size; j++) {
           new_mas[i][j] = 0;
         }
-        if(i < sizeRib) delete mas[i];
+        if (i < sizeRib) delete mas[i];
       }
-      if(sizeRib > 1)delete mas;
+      if (sizeRib > 1)delete mas;
       sizeVrt = new_size;
       mas = new_mas;
     }
@@ -333,7 +333,7 @@ struct graphMI {
         i = 1;
       }
       if (ch >= 48 && ch <= 57) {
-        if(vertex < i) this->add(vertex, i, ch - 48);
+        if (vertex < i) this->add(vertex, i, ch - 48);
         i++;
       }
     }
