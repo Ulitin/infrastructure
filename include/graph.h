@@ -177,21 +177,23 @@ struct graph {
     start(fp);
     graph *ptrG = this;
     while (ptrG != nullptr) {
+      char color[] = "black";
       vertex *ptrVrt = ptrG->vrts;
       int start = ptrVrt->vrt->first;
       ptrVrt = ptrVrt->next;
       while (ptrVrt != nullptr) {
-        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "black");
+        if (start < ptrVrt->vrt->first) add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, color);
         ptrVrt = ptrVrt->next;
       }
       ptrG = ptrG->next;
     }
     while (g != nullptr) {
+      char color[] = "red";
       vertex *ptrVrt = g->vrts;
       int start = ptrVrt->vrt->first;
       ptrVrt = ptrVrt->next;
       while (ptrVrt != nullptr) {
-        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, "red");
+        add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, color);
         ptrVrt = ptrVrt->next;
       }
       g = g->next;
@@ -340,17 +342,19 @@ struct graphMI {
   }
 
   void out_via_txt(graphMI *g) {
-    FILE* fp = fopen("Resalt", "w");
+    FILE* fp = fopen("Result", "w");
     if (fp == 0) {
       printf("Error open file \n");
       return;
     }
     start(fp);
     for (int i = 0; i < sizeRib; i++) {
-      add_rib(fp, ribin(i), ribout(i), mas[i][ribin(i) - 1], "black");
+      char color[] = "black";
+      add_rib(fp, ribin(i), ribout(i), mas[i][ribin(i) - 1], color);
     }
     for (int i = 0; i < g->sizeRib; i++) {
-      add_rib(fp, g->ribin(i), g->ribout(i), g->mas[i][g->ribin(i) - 1], "red");
+      char color[] = "red";
+      add_rib(fp, g->ribin(i), g->ribout(i), g->mas[i][g->ribin(i) - 1], color);
     }
     stop(fp);
   }
