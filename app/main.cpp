@@ -30,5 +30,5 @@ int main() {
     delete res;
   }
   fclose(fp);
-  printf("Resalt in Resalt.gv");
+  printf("Resalt in file Result\n");
 }

@@ -39,9 +39,6 @@ TEST(graph, smoke_and_input) {
   EXPECT_EQ(g2.vrts->vrt->second, 0);
   EXPECT_EQ(g3.vrts->vrt->first, 3);
   EXPECT_EQ(g3.vrts->vrt->second, 3);
-  //  EXPECT_EQ(g1.ribs, 0);
-  //  EXPECT_EQ(g2.ribs, 0);
-  //  EXPECT_EQ(g3.ribs, 0);
 }
 
 TEST(graph, find_size_vrt) {
@@ -183,21 +180,6 @@ TEST(graphMI, test_on_sort) {
       EXPECT_EQ(mas[i][j], 0);
 }
 
-TEST(avl_tree, test_on_smoke) {
-  avl_tree *tree = new avl_tree(std::make_pair(1, 0));
-  for (int i = 10; i > 1; i--) tree = insert(tree, std::make_pair(i, 0));
-  for (int i = 10; i > 0; i--) tree = removemin(tree);
-  if (tree != nullptr) FAIL();
-}
-
-TEST(avl_tree, test_find) {
-  avl_tree *tree = new avl_tree(std::make_pair(1, 0));
-  tree = insert(tree, std::make_pair(2, 0));
-  avl_tree *ptr = begin(tree);
-  EXPECT_EQ(ptr->var.first, 1);
-  tree = removemin(tree);
-  tree = removemin(tree);
-}
 
 TEST(heap, add_del) {
   heap test;

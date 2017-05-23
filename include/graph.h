@@ -132,7 +132,7 @@ struct graph {
     return size;
   }
 
-  vertex* find(int vrt) {
+  vertex* find(int vrt) {  //  find vertex
     graph *ptr = this;
     if (ptr == nullptr) return nullptr;
     while (ptr->vrts->vrt->first != vrt) {
@@ -142,7 +142,7 @@ struct graph {
     return ptr->vrts;
   }
 
-  void input_via_txt(FILE *fp) {
+  void input_via_txt(FILE *fp) {  // input from txt
     delete this->next;
     this->next = nullptr;
     delete this->vrts;
@@ -168,8 +168,8 @@ struct graph {
     }
   }
 
-  void out_via_txt(graph *g) {
-    FILE* fp = fopen("RESALT", "w");
+  void out_via_txt(graph *g) {  //  output in txt
+    FILE* fp = fopen("Result", "w");
     if (fp == 0) {
       printf("Error open file \n");
       return;
@@ -340,7 +340,7 @@ struct graphMI {
   }
 
   void out_via_txt(graphMI *g) {
-    FILE* fp = fopen("RESALT", "w");
+    FILE* fp = fopen("Resalt", "w");
     if (fp == 0) {
       printf("Error open file \n");
       return;
