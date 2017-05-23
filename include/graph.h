@@ -182,7 +182,9 @@ struct graph {
       int start = ptrVrt->vrt->first;
       ptrVrt = ptrVrt->next;
       while (ptrVrt != nullptr) {
-        if (start < ptrVrt->vrt->first) add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, color);
+        if (start < ptrVrt->vrt->first) {
+          add_rib(fp, start, ptrVrt->vrt->first, ptrVrt->vrt->second, color);
+        }
         ptrVrt = ptrVrt->next;
       }
       ptrG = ptrG->next;
